@@ -6,21 +6,38 @@ LinkPreview widget automatically retrieves some information from the content of 
 [![Latest Stable Version](https://poser.pugx.org/yii2mod/yii2-link-preview/v/stable)](https://packagist.org/packages/yii2mod/yii2-link-preview) [![Total Downloads](https://poser.pugx.org/yii2mod/yii2-link-preview/downloads)](https://packagist.org/packages/yii2mod/yii2-link-preview) [![License](https://poser.pugx.org/yii2mod/yii2-link-preview/license)](https://packagist.org/packages/yii2mod/yii2-link-preview)
 [![Build Status](https://travis-ci.org/yii2mod/yii2-link-preview.svg?branch=master)](https://travis-ci.org/yii2mod/yii2-link-preview)
 
-Installation 
+About the fork
+------------
+
+This integrates collecting the keywords and displaying them in a tag plugin
+
+Fork and Modification by Mederic Burlet
+
+
+Installation
 ------------
 
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
 
-Either run
+Add Github Repo to **composer.json**
 
 ```
-php composer.phar require --prefer-dist yii2mod/yii2-link-preview "*"
+"repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/crimson-med/yii2-link-preview"
+        }
+    ],
 ```
 
-or add
+Then simply add the line:
 
 ```
-"yii2mod/yii2-link-preview": "*"
+"yii2mod/yii2-link-preview": "dev-master"
 ```
 
 to the require section of your `composer.json` file.
@@ -31,7 +48,7 @@ Usage
 1) Execute init migration:
 ```php
 php yii migrate/up --migrationPath=@vendor/yii2mod/yii2-link-preview/migrations
-```    
+```
 
 2) Define preview action in your controller:
 ```php
@@ -41,8 +58,8 @@ public function actions()
         'link-preview' => LinkPreviewAction::className()
     ];
 }
-```     
- 
+```
+
 3) Add widget to your page as follows:
 ```php
 echo LinkPreview::widget([
@@ -51,7 +68,7 @@ echo LinkPreview::widget([
         'previewActionUrl' => \yii\helpers\Url::to(['link-preview'])
     ],
 ])
-``` 
+```
 **Example of usage with the ActiveForm and saving the page info**
 
 1) Create the basic form in the view:
@@ -80,7 +97,7 @@ if ($model->load(Yii::$app->request->post()) && $model->validate()) {
     $model->save();
 }
 
-// or the short version 
+// or the short version
 
 $linkPreviewId = LinkPreviewModel::saveAndGetId(Yii::$app->request->post());
 

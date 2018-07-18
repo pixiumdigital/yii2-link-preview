@@ -31,7 +31,6 @@ use yii\widgets\Pjax;
                 echo TagsinputWidget::widget([
                     'attribute' => 'tags',
                     'model' => $linkPreviewModel,
-                    'value' => array('test','plop'),
                     'clientOptions' => [
                         'trimValue' => true,
                         'allowDuplicates' => false,

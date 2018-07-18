@@ -15,6 +15,7 @@ use yii2mod\behaviors\PurifyBehavior;
  * @property string $url
  * @property string $canonicalUrl
  * @property string $image
+ * @property string $tags
  * @property string $code
  * @property int $createdAt
  * @property int $updatedAt
@@ -37,7 +38,7 @@ class LinkPreviewModel extends ActiveRecord
         return [
             [['title', 'description', 'url', 'canonicalUrl', 'image', 'code'], 'trim'],
             [['url', 'canonicalUrl'], 'required'],
-            [['image', 'title', 'description', 'code'], 'string'],
+            [['image', 'title', 'description', 'code', 'tags'], 'string'],
             [['createdAt', 'updatedAt'], 'integer'],
             [['url', 'canonicalUrl'], 'string', 'max' => 255],
         ];
@@ -55,6 +56,7 @@ class LinkPreviewModel extends ActiveRecord
             'url' => Yii::t('app', 'Url'),
             'canonicalUrl' => Yii::t('app', 'Canonical Url'),
             'image' => Yii::t('app', 'Image'),
+            'tags' => Yii::t('app', 'Tags'),
             'code' => Yii::t('app', 'Code'),
             'createdAt' => Yii::t('app', 'Created At'),
             'updatedAt' => Yii::t('app', 'Updated At'),

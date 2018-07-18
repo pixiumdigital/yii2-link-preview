@@ -26,6 +26,17 @@ use yii\widgets\Pjax;
                 <h4 class="media-heading" id="preview-title">
                     <?php echo Html::a($pageInfo->getTitle(), $pageInfo->getUrl(), ['target' => '_blank']); ?>
                 </h4>
+                <?php
+                $linkPreviewModel->tags = implode(',',$pageInfo->getTags());
+                echo TagsinputWidget::widget([
+                    'attribute' => 'tags',
+                    'model' => $linkPreviewModel,
+                    'value' => array('test','plop'),
+                    'clientOptions' => [
+                        'trimValue' => true,
+                        'allowDuplicates' => false,
+                    ]
+                ]) ?>
                 <p id="preview-description">
                     <?php echo StringHelper::truncateWords($pageInfo->getDescription(), 50); ?>
                 </p>

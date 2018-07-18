@@ -17,7 +17,8 @@
     "require": {
         "yiisoft/yii2": ">=2.0.8",
         "embed/embed": "^2.6",
-        "yii2mod/yii2-behaviors": "*"
+        "yii2mod/yii2-behaviors": "*",
+        "wbraganca/yii2-tagsinput": "~1.0.2"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "~2.0"

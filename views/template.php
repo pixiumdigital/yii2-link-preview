@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
 use yii\widgets\Pjax;
+use wbraganca\tagsinput\TagsinputWidget;
 
 /* @var $pageInfo \Embed\Adapters\AdapterInterface data from request */
 /* @var $linkPreviewModel \yii2mod\linkpreview\models\LinkPreviewModel */

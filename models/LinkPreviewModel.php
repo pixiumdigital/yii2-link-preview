@@ -90,8 +90,11 @@ class LinkPreviewModel extends ActiveRecord
                 ],
                 'rules' => [
                     [
-                        'actions' => ['error', 'saveAndGetId', 'save-and-get-id'],
+                        'actions' => ['error', 'save-and-get-id'],
                         'allow' => true,
+                        'roles' => [
+                            '@'         // all authenticated users
+                        ],
                     ],
                 ],
             ],

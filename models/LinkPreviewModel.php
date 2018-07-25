@@ -6,10 +6,6 @@ use Yii;
 use yii\db\ActiveRecord;
 use yii2mod\behaviors\PurifyBehavior;
 
-use yii\filters\AccessControl;
-use app\components\AccessRule;
-use app\models\User;
-
 /**
  * This is the model class for table "LinkPreview".
  *
@@ -70,7 +66,7 @@ class LinkPreviewModel extends ActiveRecord
     /**
      * @inheritdoc
      */
-    /*public function behaviors()
+    public function behaviors()
     {
         return [
             'timestamp' => [
@@ -82,24 +78,8 @@ class LinkPreviewModel extends ActiveRecord
                 'class' => PurifyBehavior::className(),
                 'attributes' => ['title', 'description'],
             ],
-            'access' => [
-                'class' => AccessControl::className(),
-                // We will override the default rule config with the new AccessRule class
-                'ruleConfig' => [
-                    'class' => AccessRule::className(),
-                ],
-                'rules' => [
-                    [
-                        'actions' => ['error', 'save-and-get-id'],
-                        'allow' => true,
-                        'roles' => [
-                            '@'         // all authenticated users
-                        ],
-                    ],
-                ],
-            ],
         ];
-    }*/
+    }
 
     /**
      * Save model and return id

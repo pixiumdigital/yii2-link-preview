@@ -70,7 +70,7 @@ class LinkPreviewModel extends ActiveRecord
     /**
      * @inheritdoc
      */
-    public function behaviors()
+    /*public function behaviors()
     {
         return [
             'timestamp' => [
@@ -99,7 +99,7 @@ class LinkPreviewModel extends ActiveRecord
                 ],
             ],
         ];
-    }
+    }*/
 
     /**
      * Save model and return id

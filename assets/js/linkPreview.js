@@ -32,9 +32,11 @@
         //For preventing duplicate requests
         countSendRequest: 0,
         //If `true`, Render only one preview
-        renderOnlyOnce: true,
+        renderOnlyOnce: false,
         //Flag for preview open popup
-        isPreviewOpen: false
+        isPreviewOpen: false,
+        //deadman switch in seconds
+        lasthit: 0,
     };
 
     var methods = {
@@ -51,7 +53,11 @@
         },
         data: function () {
             return this.data('linkPreview');
+        },
+        crawl: function() {
+             crawlText($(this), false);
         }
+
     };
 
     /**
@@ -62,14 +68,17 @@
         var data = $linkPreview.data('linkPreview');
         var options = data.options;
         // Create events for $linkPreview
-        $linkPreview.on('keyup paste', function (e) {
-            if (e.type == 'paste' || e.keyCode == 32) { //space
-                setTimeout(function () {
-                    crawlText($linkPreview, false);
-                }, 300);
-            } else {
-                crawlText($linkPreview, true);
-            }
+        $linkPreview.on('keyup', function (e) {
+            var d = new Date(); 
+            var ms = d.getTime();
+            // set current hit time
+            data.options.lasthit = (new Date()).getTime();
+            setTimeout(function() {
+                var t = (new Date()).getTime();
+                if (t - data.options.lasthit > 900) {
+                    crawlText($linkPreview);
+                } 
+            }, 1000);
         });
         //Event on close button click
         $(options.pjaxContainer).on('click', options.closeBtnClass, function () {
@@ -84,30 +93,30 @@
      * @param $linkPreview the link preview container jQuery object
      * @param refreshCounter refresh counter
      */
-    var crawlText = function ($linkPreview, refreshCounter) {
+    var crawlText = function ($linkPreview) {
         var data = $linkPreview.data('linkPreview');
         var options = data.options;
         var content = $linkPreview.val();
         var hasLink = options.urlRegex.test(content);
-        if (options.isPreviewOpen == false && hasLink == false) {
-            options.countSendRequest = 0;
-        }
-        if ((options.countSendRequest > 0 && options.renderOnlyOnce) || refreshCounter == true) {
-            return;
-        }
-        if (hasLink) {
-            var params = {content: content};
-            $.pjax.reload($.extend(options.pjaxDefaults, {
-                type: 'POST',
-                container: options.pjaxContainer,
-                url: options.previewActionUrl,
-                data: params
-            }));
-            options.countSendRequest++;
-            options.isPreviewOpen = true;
-            return false;
+        console.log("joy");
+        if (!hasLink) { 
+            if (options.isPreviewOpen) {
+                $(options.pjaxContainer).html("");
+                options.isPreviewOpen = false;  
+            }  
+            return; 
         }
 
+        var params = {content: content};
+        $.pjax.reload($.extend(options.pjaxDefaults, {
+            type: 'POST',
+            container: options.pjaxContainer,
+            url: options.previewActionUrl,
+            data: params
+        }));
+        options.countSendRequest++;
+        options.isPreviewOpen = true;
+        return false;
     };
 
 })(jQuery);
